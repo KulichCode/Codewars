@@ -1,0 +1,4 @@
+public static bool XO (string input)
+  {
+    return input.Count(x => char.ToLower(x) == 'x') == input.Count(x => char.ToLower(x) == 'o');
+  }
