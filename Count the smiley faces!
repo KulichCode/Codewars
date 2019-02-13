@@ -1,0 +1,34 @@
+public static int CountSmileys(string[] smileys) 
+  {
+     char[] eyes = { ':', ';' };
+            char[] noses = { '-', '~' };
+            char[] mouths = { ')', 'D' };
+            int count = 0;
+
+            foreach (string smile in smileys)
+            {
+            try
+            {
+                 if (eyes.Contains(smile[0]))
+                {
+                    if (noses.Contains(smile[1]))
+                    {
+                        if (mouths.Contains(smile[2]))
+                        {
+                            count++;
+                        }
+                    }
+                    else if (mouths.Contains(smile[1]))
+                    {
+                        count++;
+                    }
+
+                }
+                }
+                catch
+                {
+                return 0;
+                }
+            }
+            return count;
+  }
