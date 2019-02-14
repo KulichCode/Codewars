@@ -1,0 +1,17 @@
+using System;
+public class DigPow {
+	public static long digPow(int n, int p)
+  {
+		double x = 0;
+            foreach (char d in n.ToString())
+            {
+                x += Math.Pow(Convert.ToInt32((d.ToString())), p);
+                p++;
+            }
+            if ((x / (int)n) % 1 == 0)
+            {
+                return (long)x / n;
+            }
+            return -1;
+	}
+}
