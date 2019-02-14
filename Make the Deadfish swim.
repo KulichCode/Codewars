@@ -1,0 +1,24 @@
+ public static int[] Parse(string data)
+        {
+            int value = 0;
+            List<int> output = new List<int>();
+            foreach(char c in data)
+            {
+                switch (c)
+                {
+                    case 'i':
+                        value++;
+                        break;
+                    case 'd':
+                        value--;
+                        break;
+                    case 's':
+                        value *= value;
+                        break;
+                    case 'o':
+                        output.Add(value);
+                        break;
+                }
+            }
+            return output.ToArray();
+        }
