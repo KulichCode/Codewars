@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+public class Mixing 
+{
+  struct Character
+        {
+            public char c;
+            public int count;
+            public char where;
+            public Character(char _c, int _count, char _where)
+            {
+                c = _c;
+                count = _count;
+                where = _where;
+            }
+        }
+
+        public static string Mix(string s1, string s2)
+        {
+            List<Character> characters = new List<Character>();
+
+            for (char c = 'a'; c <= 'z'; c++)
+            {
+                if (s1.Count(x => x == c) > 1 && s1.Count(x => x == c) > s2.Count(x => x == c))
+                {
+                    characters.Add(new Character(c, s1.Count(x => x == c), '1'));
+                }
+                else if (s1.Count(x => x == c) > 1 && s1.Count(x => x == c) == s2.Count(x => x == c))
+                {
+                    characters.Add(new Character(c, s1.Count(x => x == c), '='));
+                }
+                else if (s2.Count(x => x == c) > 1)
+                {
+                    characters.Add(new Character(c, s2.Count(x => x == c), '2'));
+                }
+            }
+
+            characters = characters.OrderByDescending(x => x.count).ThenBy(y => y.where).ThenBy(z => z.c).ToList();
+            string output = "";
+
+            foreach (Character ch in characters)
+            {
+                output += ch.where + ":";
+                for (int i = 0; i < ch.count; i++)
+                {
+                    output += ch.c;
+                }
+                output += "/";
+            }
+            
+            if (output.Count() > 0)
+            {
+                output = output.Remove(output.Count() - 1, 1);
+            }
+
+            return output;
+        }
+}
