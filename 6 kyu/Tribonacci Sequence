@@ -1,0 +1,17 @@
+public double[] Tribonacci(double[] signature, int n)
+  {
+    List<double> sequence = new List<double>(signature.ToArray());
+
+            if (n < 3)
+            {
+                sequence.Reverse();
+                sequence.RemoveRange(0, 3 - n);
+                sequence.Reverse();
+                return sequence.ToArray();
+            }
+            for (int i = 0; i < n - 3; i++)
+            {
+                sequence.Add(sequence[i] + sequence[i + 1] + sequence[i + 2]);
+            }
+            return sequence.ToArray();
+  }
