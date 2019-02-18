@@ -1,0 +1,12 @@
+public IEnumerable<string> Crossover(string chromosome1, string chromosome2, int cut)
+    {
+        if (cut < chromosome1.Length && cut < chromosome2.Length)
+        {
+            string temp = chromosome1.Substring(cut);
+            chromosome1 = chromosome1.Remove(cut);
+            chromosome1 += chromosome2.Substring(cut);
+            chromosome2 = chromosome2.Remove(cut);
+            chromosome2 += temp;
+        }
+        return new string[] { chromosome1, chromosome2};
+    }
