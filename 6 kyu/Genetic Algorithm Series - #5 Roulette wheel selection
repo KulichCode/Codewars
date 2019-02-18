@@ -1,0 +1,18 @@
+public string Select(IEnumerable<string> population, IEnumerable<double> fitnesses)
+    {
+        double sum = fitnesses.Sum();
+        Random rnd = new Random();
+        double rand = rnd.NextDouble() * sum;
+        double total = 0;
+        int i = 0;
+        foreach (double fitness in fitnesses)
+        {
+            total += fitness;
+            if (total > rand)
+            {
+                return population.ToList()[i];
+            }
+            i++;
+        }
+        return "";
+    }
