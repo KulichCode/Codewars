@@ -1,0 +1,16 @@
+public class ChromosomeWrap
+{
+    public string Chromosome { get; set; }
+    public double Fitness { get; set; }
+}
+
+public IEnumerable<ChromosomeWrap> MapPopulationFit(IEnumerable<string> population, Func<string, double> fitness)
+    {
+        List<ChromosomeWrap> chromosomeWraps = new List<ChromosomeWrap>();
+            foreach (string chromosome in population)
+            {
+                chromosomeWraps.Add(new ChromosomeWrap { Chromosome = chromosome, Fitness = fitness(chromosome) });
+
+            }
+            return chromosomeWraps;
+    }
