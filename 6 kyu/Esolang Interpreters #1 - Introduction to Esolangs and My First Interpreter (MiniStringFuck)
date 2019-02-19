@@ -1,0 +1,19 @@
+public static string MyFirstInterpreter(string code)
+  {
+    string output = "";
+            int memory = 0;
+
+            foreach (char command in code)
+            {
+                switch (command)
+                {
+                    case '+':
+                        memory = (memory + 1) % 256;
+                        break;
+                    case '.':
+                        output += (char)memory;
+                        break;
+                }
+            }
+            return output;
+  }
