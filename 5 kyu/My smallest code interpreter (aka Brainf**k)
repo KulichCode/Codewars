@@ -1,0 +1,83 @@
+public static string BrainLuck(string code, string input)
+        {
+          LinkedList<byte> memory = new LinkedList<byte>();
+            LinkedListNode<byte> pointer = memory.AddFirst(0);
+            string output = "";
+
+            for (int i = 0; i < code.Length; i++)
+            {
+                switch(code[i])
+                {
+                    case '>':
+                        pointer = pointer.Next != null ? pointer.Next : memory.AddLast(0);
+                        break;
+                    case '<':
+                        pointer = pointer.Previous != null ? pointer.Previous : memory.AddFirst(0);
+                        break;
+                    case '+':
+                        pointer.Value = Convert.ToByte((pointer.Value + 1) % 256);
+                        break;
+                    case '-':
+                        pointer.Value = Convert.ToByte((256 + (pointer.Value - 1)) % 256);
+                        break;
+                    case '.':
+                        output += (char)pointer.Value;
+                        break;
+                    case ',':
+                        pointer.Value = (byte)input.First();
+                        input = input.Remove(0, 1);
+                        break;
+                    case '[':
+                        if (pointer.Value == 0)
+                        {
+                            int count = 0;
+                            for (int c = i + 1; c < code.Length; c++)
+                            {
+                                if (code[c] == '[')
+                                {
+                                    count++;
+                                }
+                                else if (code[c] == ']')
+                                {
+                                    if (count == 0)
+                                    {
+                                        i = c;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        count--;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case ']':
+                        if (pointer.Value != 0)
+                        {
+                            int count = 0;
+                            for (int c = i - 1; c >= 0; c--)
+                            {
+                                if (code[c] == ']')
+                                {
+                                    count++;
+                                }
+                                else if (code[c] == '[')
+                                {
+                                    if (count == 0)
+                                    {
+                                        i = c;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        count--;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+            return output;
+        }
