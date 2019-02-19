@@ -1,0 +1,94 @@
+public static string Interpreter(string code, string tape)
+  {
+            char[] memory = tape.ToCharArray();
+            int pointer = 0;
+            bool run = true;            
+
+            for (int i = 0; i < code.Length; i++)
+            {
+                if (!run)
+                {
+                    break;
+                }
+                switch (code[i])
+                {
+                    case '>':
+                        pointer++;
+                        if (pointer == memory.Length)
+                        {
+                            run = false;
+                        }
+                        break;
+                    case '<':
+                        pointer--;
+                        if (pointer < 0)
+                        {
+                            run = false;
+                        }
+                        break;
+                    case '*':
+                        switch (memory[pointer])
+                        {
+                            case '0':
+                                memory[pointer] = '1';
+                                break;
+                            case '1':
+                                memory[pointer] = '0';
+                                break;
+                        }
+                        break;
+                    case '[':
+                        if (memory[pointer] == '0')
+                        {
+                            int count = 0;
+                            for (int c = i + 1; c < code.Length; c++)
+                            {
+                                if (code[c] == '[')
+                                {
+                                    count++;
+                                }
+                                else if (code[c] == ']')
+                                {
+                                    if (count == 0)
+                                    {
+                                        i = c;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        count--;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case ']':
+                        if (memory[pointer] != '0')
+                        {
+                            int count = 0;
+                            for (int c = i - 1; c >= 0; c--)
+                            {
+                                if (code[c] == ']')
+                                {
+                                    count++;
+                                }
+                                else if (code[c] == '[')
+                                {
+                                    if (count == 0)
+                                    {
+                                        i = c;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        count--;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+
+            return new string(memory);
+  }
