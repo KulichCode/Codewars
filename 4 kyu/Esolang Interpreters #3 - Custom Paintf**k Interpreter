@@ -1,0 +1,143 @@
+public static string Interpret(string code, int iterations, int width, int height)
+  {
+    char[,] memory = new char[height, width];
+            int[] pointer = { 0, 0 };
+            int iter = 0;
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    memory[i, j] = '0';
+                }
+            }
+
+            for (int i = 0; i < code.Length && iter < iterations; i++)
+            {
+                switch (code[i])
+                {
+                    case 'n':
+                        iter++;
+                        if (pointer[0] == 0)
+                        {
+                            pointer[0] = height - 1;
+                        }
+                        else
+                        {
+                            pointer[0]--;
+                        }
+                        break;
+                    case 'e':
+                        iter++;
+                        if (pointer[1] == width - 1)
+                        {
+                            pointer[1] = 0;
+                        }
+                        else
+                        {
+                            pointer[1]++;
+                        }
+                        break;
+                    case 's':
+                        iter++;
+                        if (pointer[0] == height - 1)
+                        {
+                            pointer[0] = 0;
+                        }
+                        else
+                        {
+                            pointer[0]++;
+                        }
+                        break;
+                    case 'w':
+                        iter++;
+                        if (pointer[1] == 0)
+                        {
+                            pointer[1] = width - 1;
+                        }
+                        else
+                        {
+                            pointer[1]--;
+                        }
+                        break;
+                    case '*':
+                        iter++;
+                        switch (memory[pointer[0], pointer[1]])
+                        {
+                            case '0':
+                                memory[pointer[0], pointer[1]] = '1';
+                                break;
+                            case '1':
+                                memory[pointer[0], pointer[1]] = '0';
+                                break;
+                        }
+                        break;
+                    case '[':
+                        iter++;
+                        if (memory[pointer[0], pointer[1]] == '0')
+                        {
+                            int count = 0;
+                            for (int c = i + 1; c < code.Length; c++)
+                            {
+                                if (code[c] == '[')
+                                {
+                                    count++;
+                                }
+                                else if (code[c] == ']')
+                                {
+                                    if (count == 0)
+                                    {
+                                        i = c;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        count--;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case ']':
+                        iter++;
+                        if (memory[pointer[0], pointer[1]] != '0')
+                        {
+                            int count = 0;
+                            for (int c = i - 1; c >= 0; c--)
+                            {
+                                if (code[c] == ']')
+                                {
+                                    count++;
+                                }
+                                else if (code[c] == '[')
+                                {
+                                    if (count == 0)
+                                    {
+                                        i = c;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        count--;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+
+            string output = "";
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    output += memory[i, j];
+                }
+                if (i != height - 1)
+                {
+                    output += "\r\n";
+                }
+            }
+            return output;
+  }
