@@ -1,0 +1,60 @@
+public static string DoneOrNot(int[][] board)
+  {
+   bool valid = true;
+            int count;
+            for (int numb = 1; numb <= 9 && valid; numb++)
+            {
+                for (int i = 0; i < 9 && valid; i++)
+                {
+                    count = 0;
+                    for (int j = 0; j < 9 && valid; j++)
+                    {
+                        if (board[i][j] == numb)
+                        {
+                            count++;                          
+                        }
+                    }
+                    if (count != 1)
+                    {
+                        valid = false;
+                    }
+                }
+                for (int i = 0; i < 9 && valid; i++)
+                {
+                    count = 0;
+                    for (int j = 0; j < 9 && valid; j++)
+                    {
+                        if (board[j][i] == numb)
+                        {
+                            count++;
+                        }
+                    }
+                    if (count != 1)
+                    {
+                        valid = false;
+                    }
+                }
+                for (int i = 0; i < 9 && valid; i += 3)
+                {
+                    for (int j = 0; j < 9 && valid; j += 3)
+                    {
+                        count = 0;
+                        for (int row = i; row < i + 3 && valid; row++)
+                        {
+                            for (int column = j; column < j + 3 && valid; column++)
+                            {
+                                if (board[row][column] == numb)
+                                {
+                                    count++;
+                                }
+                            }
+                        }
+                        if (count != 1)
+                        {
+                          valid = false;
+                        }
+                    }
+                }
+            }
+            return valid ? "Finished!" : "Try again!";
+  }
