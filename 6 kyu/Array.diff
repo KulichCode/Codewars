@@ -1,0 +1,9 @@
+ public static int[] ArrayDiff(int[] a, int[] b)
+  {
+    List<int> temp = a.ToList();
+    foreach(int i in b)
+    {
+        temp.RemoveAll(x => x == i);
+    }
+    return temp.ToArray();
+  }
