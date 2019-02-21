@@ -1,0 +1,73 @@
+class Sudoku
+{
+            int[][] sudokuData;
+            public Sudoku(int[][] sudokuData)
+            {
+                this.sudokuData = sudokuData;
+            }
+
+            public bool IsValid()
+            {
+                bool valid = true;
+                int count;
+                if (sudokuData.GetLength(0) != sudokuData[0].GetLength(0))
+                {
+                    return false;
+                }
+                for (int numb = 1; numb <= sudokuData.GetLength(0) && valid; numb++)
+                {
+                    for (int i = 0; i < sudokuData.GetLength(0) && valid; i++)
+                    {
+                        count = 0;
+                        for (int j = 0; j < sudokuData.GetLength(0) && valid; j++)
+                        {
+                            if (sudokuData[i][j] == numb)
+                            {
+                                count++;
+                            }
+                        }
+                        if (count != 1)
+                        {
+                            valid = false;
+                        }
+                    }
+                    for (int i = 0; i < sudokuData.GetLength(0) && valid; i++)
+                    {
+                        count = 0;
+                        for (int j = 0; j < sudokuData.GetLength(0) && valid; j++)
+                        {
+                            if (sudokuData[j][i] == numb)
+                            {
+                                count++;
+                            }
+                        }
+                        if (count != 1)
+                        {
+                            valid = false;
+                        }
+                    }
+                    for (int i = 0; i < sudokuData.GetLength(0) && valid; i += (int)Math.Sqrt(sudokuData.GetLength(0)))
+                    {
+                        for (int j = 0; j < sudokuData.GetLength(0) && valid; j += (int)Math.Sqrt(sudokuData.GetLength(0)))
+                        {
+                            count = 0;
+                            for (int row = i; row < i + Math.Sqrt(sudokuData.GetLength(0)) && valid; row++)
+                            {
+                                for (int column = j; column < j + Math.Sqrt(sudokuData.GetLength(0)) && valid; column++)
+                                {
+                                    if (sudokuData[row][column] == numb)
+                                    {
+                                        count++;
+                                    }
+                                }
+                            }
+                            if (count != 1)
+                            {
+                                valid = false;
+                            }
+                        }
+                    }
+                }
+                return valid;
+            }
+}
