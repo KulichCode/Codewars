@@ -1,10 +1,10 @@
 public static string Meeting(string s)
   {
-  		string[] people = s.ToUpper().Split(';').OrderBy(x => x.Split(':')[1]).ThenBy(x => x.Split(':')[0]).ToArray();
-      string output = "";
-      foreach (string person in people)
-      {
-          output += "(" + string.Join(", ", person.Split(':').Reverse()) + ")";
-      }
-      return output;
+  	string[] people = s.ToUpper().Split(';').OrderBy(x => x.Split(':')[1]).ThenBy(x => x.Split(':')[0]).ToArray();
+	string output = "";
+	foreach (string person in people)
+	{
+		output += "(" + string.Join(", ", person.Split(':').Reverse()) + ")";
 	}
+	return output;
+}
