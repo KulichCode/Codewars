@@ -1,0 +1,22 @@
+ public static int[] Solve(int a, int b, int c, int alpha, int beta, int gamma)
+    {
+          int[] output = new int[4];
+
+          double Xc = c * Math.Cos(Math.PI * (180 + gamma) / 180) + b * Math.Cos(Math.PI * (90 + beta) / 180) + a * Math.Cos(Math.PI * alpha / 180);
+          double Yc = c * Math.Sin(Math.PI * (180 + gamma) / 180) + b * Math.Sin(Math.PI * (90 + beta) / 180) + a * Math.Sin(Math.PI * alpha / 180);
+
+          double distance = Math.Sqrt(Math.Pow(Xc, 2) + Math.Pow(Yc, 2));
+          
+          double delta = Math.Atan(-Xc / Yc) * 180 / Math.PI + 90;
+
+          output[0] = (int)Math.Round(distance);
+          output[1] = (int)delta;
+          delta -= (int)delta;
+          delta *= 60;
+          output[2] = (int)delta;
+          delta -= (int)delta;
+          delta *= 60;
+          output[3] = (int)delta;
+
+          return output;
+    }
