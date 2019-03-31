@@ -1,0 +1,10 @@
+  public static int TrailingZeros(int n)
+  {
+    int kMax = (int)Math.Floor(Math.Log(n, 5));
+    int Z = 0;
+    for (int k = 1; k <= kMax; k++)
+    {
+        Z += (int)Math.Floor(n / Math.Pow(5, k));
+    }
+    return Z;
+  }
