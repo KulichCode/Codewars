@@ -1,0 +1,22 @@
+public static int[] Race(int v1, int v2, int g) 
+	{
+      if (v1 >= v2)
+      {
+        return null;
+      }
+      float time = (float)g / (v2 - v1);
+  
+      int[] output = new int[3];
+  
+      output[0] = (int)time;
+      time -= output[0];
+      time *= 60;
+  
+      output[1] = (int)time;
+      time -= output[1];
+      time *= 60;
+  
+      output[2] = (int)time;
+  
+      return output;
+	}
