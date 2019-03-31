@@ -1,0 +1,23 @@
+public static string Rot13(string message)
+  {
+    char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+    string output = "";
+
+    foreach (char character in message)
+    {
+        if (alphabet.Contains(character))
+        {
+            output += alphabet[(alphabet.ToList().IndexOf(character) + 13) % alphabet.Length];
+        }
+        else if (alphabet.Contains(char.ToLower(character)))
+        {
+            output += char.ToUpper(alphabet[(alphabet.ToList().IndexOf(char.ToLower(character)) + 13) % alphabet.Length]);
+        }
+        else
+        {
+            output += character;
+        }
+        
+    }
+    return output;
+  }
