@@ -1,0 +1,57 @@
+private IEnumerable<string> words;
+
+    public Kata(IEnumerable<string> words)
+    {
+        this.words = words;
+    }
+
+     public string FindMostSimilar(string term)
+            {
+                List<int> dists = new List<int>();
+                List<string> w = words.ToList();
+                for (int i = 0; i < words.Count(); i++)
+                {
+                    dists.Add(LevenshteinDistance(term, w[i]));
+                }
+                return w[dists.IndexOf(dists.Min())];
+            }
+
+
+            int LevenshteinDistance(string word1, string word2)
+            {
+                int[] v0 = new int[word2.Length + 1];
+                int[] v1 = new int[word2.Length + 1];
+
+                for (int i = 0; i <= word2.Length; i++)
+                {
+                    v0[i] = i;
+                }
+
+                for (int i = 0; i <= word1.Length - 1; i++)
+                {
+                    v1[0] = i + 1;
+
+                    for (int j = 0; j <= word2.Length - 1; j++)
+                    {
+                        int[] costs = new int[3];
+                        costs[0] = v0[j + 1] + 1; // deletionCost
+                        costs[1] = v1[j] + 1; // insertionCost
+
+                        if (word1[i] == word2[j])
+                        {
+                            costs[2] = v0[j]; // substitutionCost
+                        }
+                        else
+                        {
+                            costs[2] = v0[j] + 1; // substitutionCost
+                        }
+
+                        v1[j + 1] = costs.Min();
+                    }
+
+                    int[] temp = v0;
+                    v0 = v1;
+                    v1 = temp;
+                }
+                return v0[word2.Length];
+            }
