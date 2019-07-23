@@ -1,0 +1,38 @@
+static int GCD(int a, int b)
+        {
+            while (a != b)
+            {
+                if (a > b)
+                {
+                    a -= b;
+                }
+                else
+                {
+                    b -= a;
+                }
+            }
+            return a;
+        }
+
+        public static int Running(int n)
+        {
+            if (GCD(n, 10) != 1)
+            {
+                return -1;
+            }
+            else
+            {
+                int result = 1;
+                int i = 0;
+                while (true)
+                {
+                    i++;
+                    result = 10 * result % n;
+                    if (result == 1)
+                    {
+                        break;
+                    }
+                }
+                return i;
+            }              
+        }
