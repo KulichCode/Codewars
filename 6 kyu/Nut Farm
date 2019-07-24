@@ -1,0 +1,37 @@
+public static int[] ShakeTree(string[] tree)
+  {
+      int[] output = new int[tree[0].Length];
+
+      int x = 0, y = 0;
+
+      for (int i = 0; i < tree[0].Length; i++)
+      {
+          if (tree[0][i] == 'o')
+          {
+              x = i;
+              y = 0;
+              while (y < tree.Length - 1)
+              {
+                  if (tree[y + 1][x] == '/')
+                  {
+                      x--;
+                  }
+                  else if (tree[y + 1][x] == '\\')
+                  {
+                      x++;
+                  }
+                  else if (tree[y + 1][x] == '_')
+                  {
+                      break;
+                  }
+                  y++;
+              }
+              if (y == tree.Length - 1)
+              {
+                  output[x]++;
+              }
+          }
+      }
+
+      return output;
+  }
