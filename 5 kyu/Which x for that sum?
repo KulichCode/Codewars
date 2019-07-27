@@ -1,0 +1,4 @@
+public static double Solve(double m)
+{
+    return (2 * m + 1 - Math.Sqrt(4 * m + 1)) / (2 * m);
+}
