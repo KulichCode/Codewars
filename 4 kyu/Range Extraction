@@ -1,0 +1,58 @@
+public static string Extract(int[] args)
+    {
+        string output = "";
+
+        int seq = 1;
+
+        for (int i = 1; i < args.Length; i++)
+        {
+            // sequence continues
+            if (args[i] - 1 == args[i - 1])
+            {
+                seq++;
+                if (i + 1 == args.Length)
+                {
+                    switch (seq)
+                    {
+                        case 2:
+                            output += "," + args[i - 1] + "," + args[i];
+                            break;
+                       default:
+                            output += "," + args[i + 1 - seq] + "-" + args[i];
+                            break;
+                    }                      
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                switch (seq)
+                {
+                    case 2:
+                        output += "," + args[i - 2] + "," + args[i - 1];
+                        break;
+                    case 1:
+                        output += "," + args[i - 1];
+                        break;
+                    default:
+                        output += "," + args[i - seq] + "-" + args[i - 1];
+                        break;
+                }
+                if (i + 1 == args.Length)
+                {
+                  output += "," + args[i];
+                }
+                seq = 1;
+            }
+        }       
+
+        if (output[0] == ',')
+        {
+            output = output.Remove(0, 1);
+        }
+
+        return output;
+    }
