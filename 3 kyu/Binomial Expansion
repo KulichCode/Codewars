@@ -1,0 +1,144 @@
+public static long Factorial(long n)
+{
+    if (n == 0)
+    {
+        return 1;
+    }
+    for (long i = n - 1; i > 0; i--)
+    {
+        n *= i;
+    }
+    return n;
+}
+
+public static long BinomialCoefficient(int n, int k)
+{
+    return Factorial(n) / (Factorial(n - k) * Factorial(k));
+}
+
+public static string Expand(string expr)
+{
+    string[] temp = expr.Split('^');
+
+    int n = Convert.ToInt32(temp[1]);
+
+    if (n == 0)
+    {
+        return "1";
+    }
+
+    temp[0] = temp[0].Replace("(", "");
+    temp[0] = temp[0].Replace(")", "");
+
+    if (n == 1)
+    {
+        return temp[0];
+    }
+
+    string[] coeficients;
+    char variable;
+    int a, b;
+
+    if (temp[0].Contains('+'))
+    {
+        coeficients = temp[0].Split('+');
+        variable = coeficients[0].Last();
+        coeficients[0] = coeficients[0].Replace(variable.ToString(), "");
+        if (coeficients[0] == "")
+        {
+            a = 1;
+        }
+        else if (coeficients[0] == "-")
+        {
+            a = -1;
+        }
+        else
+        {
+            a = Convert.ToInt32(coeficients[0]);
+        }
+        b = Convert.ToInt32(coeficients[1]);
+    }
+    else
+    {
+        coeficients = temp[0].Split('-');
+        if (coeficients.Length == 3)
+        {
+            variable = coeficients[1].Last();
+            coeficients[1] = coeficients[1].Replace(variable.ToString(), "");
+            a = coeficients[1] != "" ? -Convert.ToInt32(coeficients[1]) : -1;
+            b = -Convert.ToInt32(coeficients[2]);
+        }
+        else
+        {
+            variable = coeficients[0].Last();
+            coeficients[0] = coeficients[0].Replace(variable.ToString(), "");
+            a = coeficients[0] != "" ? Convert.ToInt32(coeficients[0]) : 1;
+            b = -Convert.ToInt32(coeficients[1]);
+        }
+    }
+
+    string output = "";
+    long[] powers = new long[n + 1];
+
+    for (int k = 0; k <= n; k++)
+    {
+        long bin = BinomialCoefficient(n, k);
+        long aPow = (long)Math.Pow(a, n - k);
+        long bPow = (long)Math.Pow(b, k);
+        powers[n - k] = bin * aPow * bPow;
+    }
+    for (int i = powers.Length - 1; i >= 2; i--)
+    {
+        if (powers[i] == 0)
+        {
+            continue;
+        }
+        else if (powers[i] == 1)
+        {
+            output += "+" + variable + "^" + i;
+        }
+        else if (powers[i] == -1)
+        {
+            output += "-" + variable + "^" + i;
+        }
+        else
+        {
+            if (powers[i] > 0)
+            {
+                output += "+";
+            }
+            output += powers[i].ToString() + variable.ToString() + "^" + i;
+        }
+    }
+    if (powers[1] == 1)
+    {
+        output += "+" + variable;
+    }
+    else if (powers[1] == -1)
+    {
+        output += "-" + variable;
+    }
+    else if (powers[1] != 0)
+    {
+        if (powers[1] > 0)
+        {
+            output += "+";
+        }
+        output += powers[1] + variable.ToString();
+    }
+    if (powers[0] != 0)
+    {
+        if (powers[0] > 0)
+        {
+            output += "+";
+        }
+        output += powers[0].ToString();
+    }
+
+    if (output[0] == '+')
+    {
+      output = output.Remove(0, 1);
+    }
+
+    return output;
+}
